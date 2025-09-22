@@ -7,34 +7,42 @@ namespace SimpleCalculator
         public double Calculate(string argOperation, double argFirstNumber, double argSecondNumber)
         {
             double result = 0;
+            string op = argOperation.ToLower();
 
-            if (argOperation == "+" || argOperation.ToLower() == "addition")
+            switch (op)
             {
-                result = argFirstNumber + argSecondNumber;
-            }
-            else if (argOperation == "-" || argOperation.ToLower() == "subtraction")
-            {
-                result = argFirstNumber - argSecondNumber;
-            }
-            else if (argOperation == "*" || argOperation.ToLower() == "multiplication")
-            {
-                result = argFirstNumber * argSecondNumber;
-            }
-            else if (argOperation == "/" ||  argOperation.ToLower() == "division")
-            {
-                result = argFirstNumber / argSecondNumber;
+                case "+":
+                case "addition":
+                    result = argFirstNumber + argSecondNumber;
+                    break;
 
-                if (argSecondNumber == 0)
-                {
-                    throw new DivideByZeroException("Cannot divide by zero");
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Invalid operation entered");
-            }
+                case "-":
+                case "subtaction":
+                    result = argFirstNumber - argSecondNumber;
+                    break;
 
-                return result;
+                case "*":
+                case "multiplication":
+                    result = argFirstNumber * argSecondNumber;
+                    break;
+
+                case "/":
+                case "division":
+                    if (argSecondNumber == 0)
+                    {
+                        throw new DivideByZeroException("Cannot divide by zero");
+                    }
+            
+                    result = argFirstNumber / argSecondNumber;
+                    break;
+
+                default:
+                    throw new ArgumentException("Invalid operation entered");
+                
+                 
+            }
+   
+            return result;
         }
     }
 }

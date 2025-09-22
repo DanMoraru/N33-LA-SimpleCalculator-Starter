@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SimpleCalculator
+namespace LibCalculatorEngine
 {
     public class CalculatorEngine
     {
@@ -17,7 +21,8 @@ namespace SimpleCalculator
                     break;
 
                 case "-":
-                case "subtaction":
+                case "subtraction":
+                case "soustraction":
                     result = argFirstNumber - argSecondNumber;
                     break;
 
@@ -32,16 +37,16 @@ namespace SimpleCalculator
                     {
                         throw new DivideByZeroException("Cannot divide by zero");
                     }
-            
+
                     result = argFirstNumber / argSecondNumber;
                     break;
 
                 default:
                     throw new ArgumentException("Invalid operation entered");
-                
-                 
+
+
             }
-   
+
             return result;
         }
     }

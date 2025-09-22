@@ -1,5 +1,10 @@
-﻿using System;
+﻿using LibCalculatorEngine;
+using System;
+using System.Globalization;
+using System.Threading;
 using System.Web;
+
+
 
 namespace SimpleCalculator
 {
@@ -7,14 +12,13 @@ namespace SimpleCalculator
     {
         static void Main(string[] args)
         {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr-FR");
+
             try
             {
                 // Class to convert user input
-                InputConverter inputConverter = new InputConverter();
-
-                // Class to perform actual calculations
-                CalculatorEngine calculatorEngine = new CalculatorEngine();
-
+                InputConverter inputConverter = new InputConverter();      
+                LibCalculatorEngine.CalculatorEngine calculatorEngine = new LibCalculatorEngine.CalculatorEngine();
                 //double firstNumber = InputConverter.ConvertInputToNumeric(Console.ReadLine());
                 //double secondNumber = InputConverter.ConvertInputToNumeric(Console.ReadLine());
 
@@ -22,23 +26,23 @@ namespace SimpleCalculator
                 double firstNumber;
                 while (true)
                 {
-                    Console.WriteLine("Enter the first number: ");
+                    Console.WriteLine(Properties.Constants.FirstNum);
                     string num1 = Console.ReadLine();
 
                     try
                     {
                         firstNumber = InputConverter.ConvertInputToNumeric(num1);
                         break;
-                    } catch
+                    } catch 
                     {
-                        Console.WriteLine("Invalid input. Enter a number\n");
+                        Console.WriteLine(Properties.Constants.InvalidNum+"\n");
                     }
                 }
 
                 double secondNumber;
                 while(true)
                 {
-                    Console.WriteLine("Enter the second number: ");
+                    Console.WriteLine(Properties.Constants.SecondNum);
                     string num2 = Console.ReadLine();
 
                     try
@@ -48,7 +52,7 @@ namespace SimpleCalculator
 
                     } catch
                     {
-                        Console.WriteLine("Invalid input. Enter a number\n");
+                        Console.WriteLine(Properties.Constants.InvalidNum + "\n");
                     }
                 }
 
@@ -56,10 +60,10 @@ namespace SimpleCalculator
                 string operation;
                 while (true)
                 {
-                    Console.WriteLine("Enter the operator: ");
+                    Console.WriteLine(Properties.Constants.Operator);
                     string input = Console.ReadLine().ToLower();
 
-                    if (input == "+" || input == "addition" || input == "-" || input == "subtraction"
+                    if (input == "+" || input == "addition" || input == "-" || input == "subtraction" || input == "soustraction"
                         || input == "*" || input == "multiplication" || input == "/" || input == "division")
                     {
                         operation = input;
@@ -67,9 +71,8 @@ namespace SimpleCalculator
 
                     } else
                     {
-                        Console.WriteLine("Invalid Input");
-                        Console.WriteLine("\nValid inputs include: \n" +
-                            "'+', '-', '*', '/', 'addition', 'subtraction', 'multiplication', 'division'\n");
+                        Console.WriteLine(Properties.Constants.InvalidInput);
+                        Console.WriteLine("\n" + Properties.Constants.ValidOps + "\n");
                     }
                 }
 
@@ -82,23 +85,24 @@ namespace SimpleCalculator
                 switch (op)
                 {
                     case "+":
-                    case "add":
-                        operatorWord = "plus";
+                    case "addition":
+                        operatorWord = Properties.Constants.Add;
                         break;
 
                     case "-":
-                    case "subtract":
-                        operatorWord = "minus";
+                    case "subtraction":
+                    case "soustraction":
+                        operatorWord = Properties.Constants.Sub;
                         break;
 
                     case "*":
-                    case "multiply":
-                        operatorWord = "times";
+                    case "multiplication":
+                        operatorWord = Properties.Constants.Mult;
                         break;
 
                     case "/":
-                    case "divide":
-                        operatorWord = "divided by";
+                    case "division":
+                        operatorWord = Properties.Constants.Div;
                         break;
 
                     default:
@@ -106,8 +110,8 @@ namespace SimpleCalculator
                         break;
                 }
 
-                Console.WriteLine($"\nThe value {firstNumber} {operatorWord} the value " +
-                    $"{secondNumber} is equal to {result:F2}");
+                Console.WriteLine($"\n{Properties.Constants.FinalVal1}{firstNumber} {operatorWord}{Properties.Constants.FinalVal2}" +
+                    $"{secondNumber}{Properties.Constants.FinalVal3}{result:F2}");
 
             } catch (Exception ex)
             {
